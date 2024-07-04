@@ -1,6 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive/models/person.dart';
+import 'package:hive_flutter/screens/person_input.dart';
 
-void main() {
+Future<void> main() async {
+  var path = Directory.current.path;
+  Hive
+    ..init(path)
+    ..registerAdapter(PersonAdapter());
+
   runApp(const MainApp());
 }
 
@@ -9,11 +18,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+        body: PersonInputScreen(),
       ),
     );
   }
